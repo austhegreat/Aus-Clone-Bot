@@ -1,0 +1,33 @@
+{
+  "users": {},
+  "cards": {},
+  "systemConfig": {
+    "channelUrl": "https://t.me/custom_channel",
+    "defaultRegion": "New Zealand (NZ)",
+    "defaultPlan": "Premium Ultra HD (4K)",
+    "sessionDurationHours": 48,
+    "devices": {
+      "pc": {
+        "deviceType": "pc",
+        "label": "Login PC",
+        "targetUrl": "https://custom.portal/pc",
+        "icon": "monitor",
+        "isActive": true
+      },
+      "mobile": {
+        "deviceType": "mobile",
+        "label": "Login Mobile",
+        "targetUrl": "http://localhost:3000/preview/mobile",
+        "icon": "smartphone",
+        "isActive": true
+      },
+      "tv": {
+        "deviceType": "tv",
+        "label": "Login TV",
+        "targetUrl": "http://localhost:3000/preview/tv",
+        "icon": "tv",
+        "isActive": true
+      }
+    }
+  }
+}

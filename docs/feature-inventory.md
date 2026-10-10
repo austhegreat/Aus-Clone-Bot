@@ -1,0 +1,12 @@
+# Feature Inventory Matrix — Aus Clone Bot
+
+| Feature | Entry point | Input | Processing | Output | State | Limitations | Errors | Confidence |
+|---|---|---|---|---|---|---|---|---|
+| **Start / Session Card** | `/start` command | Telegram User ID, optional start param | Fetches or provisions user utility session card | Rich formatted status message with dynamic fields | Persistent session per user | Rate limits on card generation | Generic error if service unavailable | Verified UI pattern |
+| **Login PC Action** | Inline Button `Login PC` | Click action | Generates authorized tokenized redirect or target PC web portal URL | Opens destination URL in browser | Stateless redirect / token lookup | Target domain subject to inspection | Invalid/expired link error | Observed (URL pending inspection) |
+| **Login Mobile Action** | Inline Button `Login Mobile` | Click action | Generates mobile-optimized link or deep-link | Opens destination URL in mobile browser/app | Stateless redirect / token lookup | Target domain subject to inspection | Invalid/expired link error | Observed (URL pending inspection) |
+| **Login TV Action** | Inline Button `Login TV` | Click action | Generates TV code / activation portal URL | Opens destination URL in browser | Stateless redirect / token lookup | Target domain subject to inspection | Invalid/expired link error | Observed (URL pending inspection) |
+| **Channel Subscription** | Inline Button `Subscribe Channel` | Click action | Directs user to configured community Telegram channel | Opens Telegram channel link (`t.me/...`) | Stateless | Requires Telegram client | Channel not found if invalid link | Verified UI pattern |
+| **Web Companion Dashboard** | Web App root `/` | Browser session / optional user key | Renders interactive portal matching bot's card layout | Full responsive UI with device launcher | Synced with backend API | Browser modern standards | Network / 404 / 500 error display | Reconstructed feature |
+| **Admin Configuration** | Web / API `/api/config` | Admin key / Auth | Updates default region, plan, expiration duration, and device redirect URLs | Persisted in database | Persistent | Authorized admins only | 401 Unauthorized | Reconstructed feature |
+| **Health Check** | `/api/health` | None | Evaluates database and service availability | JSON `{ status: 'ok', timestamp: ... }` | Stateless | None | 503 if DB down | Reconstructed feature |
