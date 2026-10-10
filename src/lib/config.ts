@@ -12,14 +12,16 @@ export const config = {
   telegramWebhookSecret: process.env.TELEGRAM_WEBHOOK_SECRET || "aus_bot_secret_token",
   
   // Defaults for Session Cards
-  defaultRegion: process.env.DEFAULT_REGION || "Australia (AU)",
-  defaultPlan: process.env.DEFAULT_PLAN || "Premium Ultra HD (4K)",
+  defaultHeading: process.env.DEFAULT_HEADING || "NETCRACK Success!",
+  defaultRegion: process.env.DEFAULT_REGION || "🇯🇵 Japan",
+  defaultPlan: process.env.DEFAULT_PLAN || "Premium",
   sessionDurationHours: parseInt(process.env.SESSION_DURATION_HOURS || "48", 10),
 
-  // Device Destination URLs (Pending Inspection / Configurable)
-  pcLoginUrl: process.env.PC_LOGIN_URL || "http://localhost:3000/preview/pc",
-  mobileLoginUrl: process.env.MOBILE_LOGIN_URL || "http://localhost:3000/preview/mobile",
-  tvLoginUrl: process.env.TV_LOGIN_URL || "http://localhost:3000/preview/tv",
+  // Target Domain for Destination URLs (Configurable: local simulation or external target)
+  targetDomain: process.env.TARGET_DOMAIN || "http://localhost:3000",
+  pcPath: process.env.PC_PATH || "/tv8",
+  mobilePath: process.env.MOBILE_PATH || "/account",
+  tvPath: process.env.TV_PATH || "/unsupported",
 
   // Security & Admin
   adminSecret: process.env.ADMIN_SECRET || "admin123",

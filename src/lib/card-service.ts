@@ -1,6 +1,7 @@
-import { randomUUID } from "crypto";
-import { appRepository, FileAppRepository } from "./storage/file-repository";
+import { randomBytes, randomUUID } from "crypto";
+import { appRepository } from "./storage/file-repository";
 import { IAppRepository } from "./storage/repository";
+import { formatObservedExpirationDate } from "./formatter";
 import {
   SessionCard,
   SystemConfig,
@@ -8,6 +9,15 @@ import {
   CardCreationInput,
   UpdateConfigInput,
 } from "../types";
+
+/**
+ * Generates a realistic token payload mirroring the observed Base64-like structure of `nftoken`
+ */
+export function generateNftoken(): string {
+  const prefix = "BgjCwOvcAxLCASQsMb4qRv9xdNEaIHyfpg+Gt/j6vA/GRaVfu8koL1yIF4nP77EkM8L/";
+  const randomPayload = randomBytes(96).toString("base64");
+  return `${prefix}${randomPayload}`;
+}
 
 export class CardService {
   constructor(private repo: IAppRepository = appRepository) {}
@@ -42,21 +52,37 @@ export class CardService {
 
     const durationHours = options?.durationHours || sysConfig.sessionDurationHours;
     const expiresAt = new Date(Date.now() + durationHours * 3600 * 1000).toISOString();
+    const formattedExpiryText = formatObservedExpirationDate(expiresAt);
+
+    // Generate shared token parameter for all 3 device buttons
+    const nftoken = generateNftoken();
+
+    // Construct destination URLs appending ?nftoken=...
+    const pcBase = sysConfig.devices.pc.targetUrl;
+    const mobileBase = sysConfig.devices.mobile.targetUrl;
+    const tvBase = sysConfig.devices.tv.targetUrl;
+
+    const appendToken = (baseUrl: string, token: string) => {
+      const separator = baseUrl.includes("?") ? "&" : "?";
+      return `${baseUrl}${separator}nftoken=${encodeURIComponent(token)}`;
+    };
 
     const card: SessionCard = {
       id: randomUUID(),
       userId,
       username,
-      statusHeading: "Success! Your access pass is active",
-      region: options?.region || sysConfig.defaultRegion,
-      plan: options?.plan || sysConfig.defaultPlan,
+      statusHeading: options?.statusHeading || sysConfig.defaultHeading || "NETCRACK Success!",
+      region: options?.region || sysConfig.defaultRegion || "🇯🇵 Japan",
+      plan: options?.plan || sysConfig.defaultPlan || "Premium",
       expiresAt,
+      formattedExpiryText,
+      nftoken,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       deviceLinks: {
-        pc: sysConfig.devices.pc.targetUrl,
-        mobile: sysConfig.devices.mobile.targetUrl,
-        tv: sysConfig.devices.tv.targetUrl,
+        pc: appendToken(pcBase, nftoken),
+        mobile: appendToken(mobileBase, nftoken),
+        tv: appendToken(tvBase, nftoken),
       },
       channelUrl: sysConfig.channelUrl,
     };
@@ -79,9 +105,11 @@ export class CardService {
     const updated: SystemConfig = {
       ...current,
       channelUrl: input.channelUrl || current.channelUrl,
+      defaultHeading: input.defaultHeading || current.defaultHeading,
       defaultRegion: input.defaultRegion || current.defaultRegion,
       defaultPlan: input.defaultPlan || current.defaultPlan,
       sessionDurationHours: input.sessionDurationHours || current.sessionDurationHours,
+      targetDomain: input.targetDomain || current.targetDomain,
       devices: {
         pc: {
           ...current.devices.pc,

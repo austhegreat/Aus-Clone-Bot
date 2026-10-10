@@ -1,0 +1,76 @@
+{
+  "users": {},
+  "cards": {
+    "c63cab84-898c-4df7-ba2d-aaa8759790da": {
+      "id": "c63cab84-898c-4df7-ba2d-aaa8759790da",
+      "userId": "user_force_new",
+      "statusHeading": "NETCRACK Success!",
+      "region": "🇯🇵 Japan",
+      "plan": "Premium",
+      "expiresAt": "2026-10-12T09:13:00.526Z",
+      "formattedExpiryText": "12/10/2026, 16.13.00 WIB",
+      "nftoken": "BgjCwOvcAxLCASQsMb4qRv9xdNEaIHyfpg+Gt/j6vA/GRaVfu8koL1yIF4nP77EkM8L/Ax6tvzce3siWh5lQFApVBXVx2g4XgfifcU8CwBC1PcHcmTmLH0ARL34wZwL+hkobndoByvUWmmv4Z8Q1ogp+mWOXQ/MM7Zdgtdag1v3EMf1E5ucjS/ZS/Ssqxxgxjuue",
+      "createdAt": "2026-10-10T09:13:00.527Z",
+      "updatedAt": "2026-10-10T09:13:00.527Z",
+      "deviceLinks": {
+        "pc": "http://localhost:3000/tv8?nftoken=BgjCwOvcAxLCASQsMb4qRv9xdNEaIHyfpg%2BGt%2Fj6vA%2FGRaVfu8koL1yIF4nP77EkM8L%2FAx6tvzce3siWh5lQFApVBXVx2g4XgfifcU8CwBC1PcHcmTmLH0ARL34wZwL%2BhkobndoByvUWmmv4Z8Q1ogp%2BmWOXQ%2FMM7Zdgtdag1v3EMf1E5ucjS%2FZS%2FSsqxxgxjuue",
+        "mobile": "http://localhost:3000/account?nftoken=BgjCwOvcAxLCASQsMb4qRv9xdNEaIHyfpg%2BGt%2Fj6vA%2FGRaVfu8koL1yIF4nP77EkM8L%2FAx6tvzce3siWh5lQFApVBXVx2g4XgfifcU8CwBC1PcHcmTmLH0ARL34wZwL%2BhkobndoByvUWmmv4Z8Q1ogp%2BmWOXQ%2FMM7Zdgtdag1v3EMf1E5ucjS%2FZS%2FSsqxxgxjuue",
+        "tv": "http://localhost:3000/unsupported?nftoken=BgjCwOvcAxLCASQsMb4qRv9xdNEaIHyfpg%2BGt%2Fj6vA%2FGRaVfu8koL1yIF4nP77EkM8L%2FAx6tvzce3siWh5lQFApVBXVx2g4XgfifcU8CwBC1PcHcmTmLH0ARL34wZwL%2BhkobndoByvUWmmv4Z8Q1ogp%2BmWOXQ%2FMM7Zdgtdag1v3EMf1E5ucjS%2FZS%2FSsqxxgxjuue"
+      },
+      "channelUrl": "https://t.me/aus_updates"
+    },
+    "cbcfc535-6535-4de7-bd07-1db2f822f791": {
+      "id": "cbcfc535-6535-4de7-bd07-1db2f822f791",
+      "userId": "user_force_new",
+      "username": "user_force_new",
+      "statusHeading": "NETCRACK Success!",
+      "region": "🇦🇺 Australia",
+      "plan": "Premium",
+      "expiresAt": "2026-10-12T09:13:00.528Z",
+      "formattedExpiryText": "12/10/2026, 16.13.00 WIB",
+      "nftoken": "BgjCwOvcAxLCASQsMb4qRv9xdNEaIHyfpg+Gt/j6vA/GRaVfu8koL1yIF4nP77EkM8L/6YVtBExy69XyAKOqgwRwuTyV3FECPsMLpZ4IshA4pC+Yt73nNMI0wgvaNeFRAsh5uL57H3M8+9vLPIvweyXHXfE5IxVdUyKTDikGhk2rc4O8lHEUw6NTaOj1/+7Sz+BV",
+      "createdAt": "2026-10-10T09:13:00.529Z",
+      "updatedAt": "2026-10-10T09:13:00.529Z",
+      "deviceLinks": {
+        "pc": "http://localhost:3000/tv8?nftoken=BgjCwOvcAxLCASQsMb4qRv9xdNEaIHyfpg%2BGt%2Fj6vA%2FGRaVfu8koL1yIF4nP77EkM8L%2F6YVtBExy69XyAKOqgwRwuTyV3FECPsMLpZ4IshA4pC%2BYt73nNMI0wgvaNeFRAsh5uL57H3M8%2B9vLPIvweyXHXfE5IxVdUyKTDikGhk2rc4O8lHEUw6NTaOj1%2F%2B7Sz%2BBV",
+        "mobile": "http://localhost:3000/account?nftoken=BgjCwOvcAxLCASQsMb4qRv9xdNEaIHyfpg%2BGt%2Fj6vA%2FGRaVfu8koL1yIF4nP77EkM8L%2F6YVtBExy69XyAKOqgwRwuTyV3FECPsMLpZ4IshA4pC%2BYt73nNMI0wgvaNeFRAsh5uL57H3M8%2B9vLPIvweyXHXfE5IxVdUyKTDikGhk2rc4O8lHEUw6NTaOj1%2F%2B7Sz%2BBV",
+        "tv": "http://localhost:3000/unsupported?nftoken=BgjCwOvcAxLCASQsMb4qRv9xdNEaIHyfpg%2BGt%2Fj6vA%2FGRaVfu8koL1yIF4nP77EkM8L%2F6YVtBExy69XyAKOqgwRwuTyV3FECPsMLpZ4IshA4pC%2BYt73nNMI0wgvaNeFRAsh5uL57H3M8%2B9vLPIvweyXHXfE5IxVdUyKTDikGhk2rc4O8lHEUw6NTaOj1%2F%2B7Sz%2BBV"
+      },
+      "channelUrl": "https://t.me/aus_updates"
+    }
+  },
+  "systemConfig": {
+    "channelUrl": "https://t.me/aus_updates",
+    "defaultHeading": "NETCRACK Success!",
+    "defaultRegion": "🇯🇵 Japan",
+    "defaultPlan": "Premium",
+    "sessionDurationHours": 48,
+    "targetDomain": "http://localhost:3000",
+    "devices": {
+      "pc": {
+        "deviceType": "pc",
+        "label": "🖥️ Login PC",
+        "path": "/tv8",
+        "targetUrl": "http://localhost:3000/tv8",
+        "icon": "monitor",
+        "isActive": true
+      },
+      "mobile": {
+        "deviceType": "mobile",
+        "label": "📱 Login Mobile",
+        "path": "/account",
+        "targetUrl": "http://localhost:3000/account",
+        "icon": "smartphone",
+        "isActive": true
+      },
+      "tv": {
+        "deviceType": "tv",
+        "label": "📺 Login TV",
+        "path": "/unsupported",
+        "targetUrl": "http://localhost:3000/unsupported",
+        "icon": "tv",
+        "isActive": true
+      }
+    }
+  }
+}

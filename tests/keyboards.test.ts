@@ -2,45 +2,46 @@ import { describe, it, expect } from "vitest";
 import { buildDeviceKeyboard } from "../src/lib/bot/keyboards";
 import { SessionCard } from "../src/types";
 
-describe("Telegram Keyboard Generator", () => {
+describe("Telegram Keyboard Generator — Observed Layout", () => {
   const mockCard: SessionCard = {
     id: "card-99",
     userId: "user-99",
-    statusHeading: "Active",
-    region: "Australia (AU)",
+    statusHeading: "NETCRACK Success!",
+    region: "🇯🇵 Japan",
     plan: "Premium",
     expiresAt: "2026-10-12T00:00:00Z",
+    nftoken: "sample_nftoken_12345",
     createdAt: "2026-10-10T00:00:00Z",
     updatedAt: "2026-10-10T00:00:00Z",
     deviceLinks: {
-      pc: "https://aus.example.com/pc",
-      mobile: "https://aus.example.com/mobile",
-      tv: "https://aus.example.com/tv",
+      pc: "https://www.netflix.com/tv8?nftoken=sample_nftoken_12345",
+      mobile: "https://www.netflix.com/account?nftoken=sample_nftoken_12345",
+      tv: "https://www.netflix.com/unsupported?nftoken=sample_nftoken_12345",
     },
     channelUrl: "https://t.me/aus_updates",
   };
 
-  it("builds the 2-row layout with 3 device buttons and 1 channel button", () => {
+  it("builds the single-column vertical layout matching the screenshot", () => {
     const keyboard = buildDeviceKeyboard(mockCard);
     const json = keyboard.inline_keyboard;
 
-    // Must have 2 rows
-    expect(json.length).toBe(2);
+    // Must have 4 rows: PC, Mobile, TV, Channel
+    expect(json.length).toBe(4);
 
-    // Row 1: PC, Mobile, TV buttons
-    const row1 = json[0];
-    expect(row1.length).toBe(3);
-    expect(row1[0].text).toContain("Login PC");
-    expect((row1[0] as any).url).toBe("https://aus.example.com/pc");
-    expect(row1[1].text).toContain("Login Mobile");
-    expect((row1[1] as any).url).toBe("https://aus.example.com/mobile");
-    expect(row1[2].text).toContain("Login TV");
-    expect((row1[2] as any).url).toBe("https://aus.example.com/tv");
+    // Row 1: PC button (/tv8?nftoken=...)
+    expect(json[0][0].text).toContain("Login PC");
+    expect((json[0][0] as any).url).toContain("/tv8?nftoken=");
 
-    // Row 2: Subscribe Channel button
-    const row2 = json[1];
-    expect(row2.length).toBe(1);
-    expect(row2[0].text).toContain("Subscribe Channel");
-    expect((row2[0] as any).url).toBe("https://t.me/aus_updates");
+    // Row 2: Mobile button (/account?nftoken=...)
+    expect(json[1][0].text).toContain("Login Mobile");
+    expect((json[1][0] as any).url).toContain("/account?nftoken=");
+
+    // Row 3: TV button (/unsupported?nftoken=...)
+    expect(json[2][0].text).toContain("Login TV");
+    expect((json[2][0] as any).url).toContain("/unsupported?nftoken=");
+
+    // Row 4: Subscribe Channel
+    expect(json[3][0].text).toContain("Subscribe Channel");
+    expect((json[3][0] as any).url).toBe("https://t.me/aus_updates");
   });
 });

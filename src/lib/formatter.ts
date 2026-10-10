@@ -1,42 +1,63 @@
 import { SessionCard, FormattedMessage } from "../types";
 
 /**
- * Formats a Date into a clean, human-readable UTC timestamp
- * e.g. "2026-10-12 16:30:00 UTC"
+ * Formats a Date into the exact observed format:
+ * D/M/YYYY, HH.MM.SS WIB
+ * e.g. "8/10/2026, 23.12.03 WIB"
  */
-export function formatExpirationDate(isoString: string): string {
+export function formatObservedExpirationDate(isoString: string, timeZone: string = "Asia/Jakarta"): string {
   const date = new Date(isoString);
   if (isNaN(date.getTime())) return isoString;
 
-  const yyyy = date.getUTCFullYear();
-  const mm = String(date.getUTCMonth() + 1).padStart(2, "0");
-  const dd = String(date.getUTCDate()).padStart(2, "0");
-  const hours = String(date.getUTCHours()).padStart(2, "0");
-  const mins = String(date.getUTCMinutes()).padStart(2, "0");
-  const secs = String(date.getUTCSeconds()).padStart(2, "0");
+  try {
+    const formatter = new Intl.DateTimeFormat("en-GB", {
+      timeZone,
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    });
 
-  return `${yyyy}-${mm}-${dd} ${hours}:${mins}:${secs} UTC`;
+    const parts = formatter.formatToParts(date);
+    const day = parts.find((p) => p.type === "day")?.value || "";
+    const month = parts.find((p) => p.type === "month")?.value || "";
+    const year = parts.find((p) => p.type === "year")?.value || "";
+    const hour = parts.find((p) => p.type === "hour")?.value || "00";
+    const minute = parts.find((p) => p.type === "minute")?.value || "00";
+    const second = parts.find((p) => p.type === "second")?.value || "00";
+
+    // Format as: D/M/YYYY, HH.MM.SS WIB
+    return `${parseInt(day, 10)}/${parseInt(month, 10)}/${year}, ${hour}.${minute}.${second} WIB`;
+  } catch {
+    return date.toISOString();
+  }
 }
 
 /**
- * Generates the Telegram HTML formatted message matching the reference bot structure:
- * - Success heading
- * - Region information
- * - Subscription-plan information
- * - Expiration date and time
- * - Device selection prompt
+ * Generates the exact Telegram HTML formatted message matching the reference bot:
+ *
+ * 🎉 NETCRACK Success!
+ *
+ * 🌍 Region: 🇯🇵 Japan
+ * 📝 Plan: Premium
+ * ⌛ Expires: 8/10/2026, 23.12.03 WIB
+ *
+ * Select device to login:
  */
 export function formatCardForTelegram(card: SessionCard): FormattedMessage {
-  const formattedExpiry = formatExpirationDate(card.expiresAt);
+  const formattedExpiry = card.formattedExpiryText || formatObservedExpirationDate(card.expiresAt);
 
   const text = [
-    `<b>✅ ${escapeHtml(card.statusHeading)}</b>`,
+    `<b>🎉 ${escapeHtml(card.statusHeading)}</b>`,
     ``,
-    `📍 <b>Region:</b> <code>${escapeHtml(card.region)}</code>`,
-    `💎 <b>Plan:</b> <code>${escapeHtml(card.plan)}</code>`,
-    `⏳ <b>Expiration:</b> <code>${formattedExpiry}</code>`,
+    `🌍 <b>Region:</b> ${card.region}`,
+    `📝 <b>Plan:</b> ${card.plan}`,
+    `⌛ <b>Expires:</b> ${formattedExpiry}`,
     ``,
-    `👇 <b>Please select your device to proceed:</b>`,
+    `Select device to login:`,
   ].join("\n");
 
   return {

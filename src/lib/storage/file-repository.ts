@@ -23,31 +23,37 @@ export class FileAppRepository implements IAppRepository {
     this.state = this.loadState();
   }
 
-  private getDefaultConfig(): SystemConfig {
+  public getDefaultConfig(): SystemConfig {
+    const base = config.targetDomain || "http://localhost:3000";
     return {
       channelUrl: config.telegramChannelUrl,
+      defaultHeading: config.defaultHeading,
       defaultRegion: config.defaultRegion,
       defaultPlan: config.defaultPlan,
       sessionDurationHours: config.sessionDurationHours,
+      targetDomain: base,
       devices: {
         pc: {
           deviceType: "pc",
-          label: "Login PC",
-          targetUrl: config.pcLoginUrl,
+          label: "🖥️ Login PC",
+          path: config.pcPath,
+          targetUrl: `${base}${config.pcPath}`,
           icon: "monitor",
           isActive: true,
         },
         mobile: {
           deviceType: "mobile",
-          label: "Login Mobile",
-          targetUrl: config.mobileLoginUrl,
+          label: "📱 Login Mobile",
+          path: config.mobilePath,
+          targetUrl: `${base}${config.mobilePath}`,
           icon: "smartphone",
           isActive: true,
         },
         tv: {
           deviceType: "tv",
-          label: "Login TV",
-          targetUrl: config.tvLoginUrl,
+          label: "📺 Login TV",
+          path: config.tvPath,
+          targetUrl: `${base}${config.tvPath}`,
           icon: "tv",
           isActive: true,
         },
@@ -104,7 +110,6 @@ export class FileAppRepository implements IAppRepository {
       (c) => c.userId === userId && c.expiresAt > now
     );
     if (userCards.length === 0) return null;
-    // Return latest created card
     userCards.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     return userCards[0];
   }
@@ -132,5 +137,4 @@ export class FileAppRepository implements IAppRepository {
   }
 }
 
-// Global singleton instance
 export const appRepository = new FileAppRepository();

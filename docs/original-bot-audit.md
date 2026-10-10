@@ -1,28 +1,55 @@
 # Original Telegram Bot Reconnaissance Audit — Aus Clone Bot
 
-## 1. Target Identity & Observed Interface
-- **Reference Bot Username:** `@netflixgetlink_bot`
-- **Reference Bot URL:** `https://t.me/netflixgetlink_bot`
-- **Replacement Project Name:** `Aus Clone Bot`
-- **Reconnaissance Date:** Current Analysis Phase
-- **Operational Policy:** Independent utility reconstruction using observable UI patterns and authorized configuration only. No collection of 3rd-party credentials, session tokens, or unauthorized account access.
+## 1. Verified Evidence from User Screenshots
 
-## 2. Observed Message Structure & Card Layout
-Upon invoking `/start`, the reference bot renders a structured result/access card containing:
+Based on the three provided inspection screenshots of `@netflixgetlink_bot`, the exact UI structure, destination URLs, and parameters have been fully decoded:
 
-1. **Header / Status Banner:** Success indicator (e.g., status heading confirming active access or generation).
-2. **Region Field:** Geographic region code/name (e.g., `Australia (AU)`, `United States (US)`).
-3. **Subscription Plan:** Plan tier specification (e.g., `Premium Ultra HD`, `Standard`).
-4. **Expiration Timestamp:** Explicit date and time when the current pass/session expires.
-5. **Instructional Prompt:** Prompt guiding the user to select their target device.
-6. **Device Action Buttons (Inline Keyboard):**
-   - `🖥️ Login PC` (or `Login PC`): Inline URL button directing to a device-specific launch URL.
-   - `📱 Login Mobile` (or `Login Mobile`): Inline URL button directing to mobile web / deep-link.
-   - `📺 Login TV` (or `Login TV`): Inline URL button directing to TV-activation / code portal.
-7. **Auxiliary Action Button:**
-   - `📢 Subscribe Channel`: Inline URL button directing to a public Telegram announcement channel.
+### Message Card Anatomy
+```text
+🎉 NETCRACK Success!
 
-## 3. Interaction Observations
-- **Repeat `/start` Execution:** Re-sending `/start` renders the active result card without error, acting idempotently or retrieving the active session.
-- **Button Nature:** The device buttons are Telegram inline URL buttons (`inline_keyboard` with `url` field) rather than internal state transitions.
-- **Pending Inspections:** The destination URLs for PC, Mobile, and TV are marked as **Pending Inspection** awaiting destination domain verification from the user. In the replacement application, these destinations are fully configurable via admin/environment settings and use safe, authorized redirect endpoints.
+🌍 Region: 🇯🇵 Japan
+📝 Plan: Premium
+⌛ Expires: 8/10/2026, 23.12.03 WIB
+
+Select device to login:
+```
+
+### Exact Field Specifications
+| Field | Observed Visual Format | Example Value | Notes |
+|---|---|---|---|
+| **Status Banner** | `🎉 NETCRACK Success!` | `🎉 NETCRACK Success!` | Celebratory emoji + system moniker + status |
+| **Region** | `🌍 Region: [Flag] [Name]` | `🌍 Region: 🇯🇵 Japan` | Globe emoji + Country flag + Country name |
+| **Plan** | `📝 Plan: [Plan Name]` | `📝 Plan: Premium` | Notepad emoji + subscription tier |
+| **Expiration** | `⌛ Expires: D/M/YYYY, HH.MM.SS [TZ]` | `⌛ Expires: 8/10/2026, 23.12.03 WIB` | Hourglass emoji + timestamp with timezone |
+| **Prompt** | `Select device to login:` | `Select device to login:` | Direct, unadorned prompt text |
+
+### Device Action Buttons (1 Column Stack)
+Unlike horizontal rows, all three device buttons are stacked vertically:
+1. `🖥️ Login PC`
+2. `📱 Login Mobile`
+3. `📺 Login TV`
+
+### Destination URLs & Parameter Analysis
+The tooltip inspection reveals the exact destinations and query parameter schemas:
+
+| Button | Exact Observed Destination URL | Target Path | Parameter Name |
+|---|---|---|---|
+| `🖥️ Login PC` | `https://www.netflix.com/tv8?nftoken={TOKEN}` | `/tv8` | `nftoken` |
+| `📱 Login Mobile` | `https://www.netflix.com/account?nftoken={TOKEN}` | `/account` | `nftoken` |
+| `📺 Login TV` | `https://www.netflix.com/unsupported?nftoken={TOKEN}` | `/unsupported` | `nftoken` |
+
+#### Token Properties (`nftoken`):
+- All three device buttons share the **identical** token payload in a single message turn.
+- Length: ~260+ characters, Base64-like URL encoded payload with `+` and `/` delimiters.
+- Purpose: Represents an encoded streaming session token or authentication ticket.
+
+---
+
+## 2. Ethical & Architectural Boundary Assessment
+
+- **Analysis of Reference Bot:** The reference bot distributes shared third-party tokens under the moniker "NETCRACK" for streaming service bypass.
+- **Strict Compliance Rule:** In accordance with project requirements and ethical software engineering:
+  1. Aus Clone Bot will **not** crack, scrape, or harvest unauthorized third-party credentials or active Netflix account tokens.
+  2. The application reproduces the complete interface structure, layout, emoji conventions, token generation mechanics (`nftoken`), and parameter routing.
+  3. Destination targets (`/tv8`, `/account`, `/unsupported`) are hosted locally / configurably on the companion web application as functional simulation portals, while allowing administrators to configure any target domain via the Admin configuration panel.
